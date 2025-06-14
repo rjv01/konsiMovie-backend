@@ -23,10 +23,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// app.use(cors({
+//   // origin: 'http://localhost:5173',
+//   origin: 'hhttps://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/',
+//   credentials: true,
+// }));
+
+const allowedOrigins = [
+  // "http://localhost:5173",
+  "https://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/",
+];
+
 app.use(cors({
-  // origin: 'http://localhost:5173',
-  origin: 'hhttps://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/',
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 
 app.use(cookieParser());
