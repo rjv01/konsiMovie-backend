@@ -7,45 +7,40 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// 🔌 Load env variables and DB connection
+// 🔌 Load environment variables and connect to DB
 dotenv.config();
 require('./connection/condb');
 
-// ✅ Import routes (not controllers directly)
+// ✅ Import routes
 const movieCtr = require('./routing/movieCtr');
 const userRoute = require('./routes/userRoute');
 const likesRoute = require('./routes/likesRoute');
 
 const PORT = process.env.PORT || 5000;
 
-// ✅ Middleware setup
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// app.use(cors({
-//   // origin: 'http://localhost:5173',
-//   origin: 'hhttps://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/',
-//   credentials: true,
-// }));
-
+// ✅ CORS setup
 const allowedOrigins = [
-  // "http://localhost:5173",
-  "https://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/",
+  'http://localhost:5173',
+  'https://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app',
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // Allow server-to-server or tools like Postman
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
+      console.log('❌ Blocked by CORS: ', origin);
       return callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
 }));
 
+// ✅ Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 // ✅ Routes
@@ -53,7 +48,7 @@ app.use('/movies', movieCtr);
 app.use('/users', userRoute);
 app.use('/likes', likesRoute);
 
-// ✅ Test route
+// ✅ Test Route
 app.get('/oko', (req, res) => {
   res.send('Konsi-Movie Backend is running raj');
 });
@@ -62,6 +57,7 @@ app.get('/oko', (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
+
 
 // // //'/movies' prefix
 // // app.use('/movies', routei);
