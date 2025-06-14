@@ -24,7 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  // origin: 'http://localhost:5173',
+  origin: 'hhttps://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app/',
   credentials: true,
 }));
 
