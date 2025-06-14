@@ -20,8 +20,8 @@ const PORT = process.env.PORT || 5000;
 
 // ✅ CORS setup
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app',
+  // 'http://localhost:5173',
+  // 'https://konsi-movie-frontend-nzftfat9o-raj-shekhar-vermas-projects.vercel.app',
   'https://konsi-movie-frontend-9c5edzh1w-raj-shekhar-vermas-projects.vercel.app',
 ];
 
